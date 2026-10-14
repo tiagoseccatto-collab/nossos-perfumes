@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossos Perfumes</title>
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #c5a059;
+            --text: #2c2c2c;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), 
+                        url('https://i.pinimg.com/736x/02/92/5c/02925cc14951ba9be6e7fcafb4b03cb9.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 950px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffffff;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+        }
+        h1 {
+            color: #f3e5ab;
+            margin-bottom: 5px;
+            font-size: 2.6rem;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+        header p {
+            color: #e2dcda;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+        .card {
+            background: rgba(240, 240, 240, 0.75); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+            margin-bottom: 25px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .card h2 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 2px solid #e5d394;
+            padding-bottom: 8px;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        form .full-width {
+            grid-column: span 2;
+        }
+        label {
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], select, input[type="number"], input[type="url"] {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 6px rgba(197, 160, 89, 0.5);
+            background: #ffffff;
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            background: rgba(248, 248, 248, 0.85);
+            border: 1px solid #ccc;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            font-size: 13px;
+            cursor: pointer;
+            margin-bottom: 0;
+            color: #222;
+        }
+        .checkbox-label input {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+        button.btn-submit {
+            background-color: #1a1a1a;
+            color: #f3e5ab;
+            border: 1px solid #f3e5ab;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            grid-column: span 2;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        button.btn-submit:hover {
+            background-color: #333333;
+        }
+        .filter-bar {
+            margin-bottom: 25px;
+            width: 100%;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .filter-bar select {
+            background: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+        }
+        #lista-perfumes {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        #lista-perfumes::-webkit-scrollbar {
+            width: 6px;
+        }
+        #lista-perfumes::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        #lista-perfumes::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 4px;
+        }
+        .perfume-card {
+            background: rgba(240, 240, 240, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 15px;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            width: 100%;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+        .perfume-card-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .perfume-card-info { flex: 1; }
+        .perfume-card h3 { margin: 0 0 5px 0; color: var(--primary); font-size: 1.2rem; }
+        .perfume-card p { margin: 2px 0; font-size: 0.9rem; color: #444; }
+        .perfume-tags {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            background: #e5d394;
+            color: #1a1a1a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn-action {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            width: 80px;
+            text-align: center;
+        }
+        .btn-delete {
+            background-color: #1a1a1a;
+            color: #f3e5ab;
+            border: 1px solid #f3e5ab;
+        }
+        .btn-delete:hover { background-color: #333; }
+        #loading-msg {
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+    </style>
+
+    <!-- SDKs do Firebase v10 com as suas credenciais -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCC0qDw7sLVou759xhnhhkHpKpLtSf9US4",
+            authDomain: "nossos-perfumes.firebaseapp.com",
+            projectId: "nossos-perfumes",
+            storageBucket: "nossos-perfumes.firebasestorage.app",
+            messagingSenderId: "143402748497",
+            appId: "1:143402748497:web:fa2581d8df52b787ea0670"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const form = document.getElementById('form-perfume');
+        const listaPerfumes = document.getElementById('lista-perfumes');
+        const filtroOcasiao = document.getElementById('filtro-ocasiao');
+        const filtroClima = document.getElementById('filtro-clima');
+        const loadingMsg = document.getElementById('loading-msg');
+
+        let perfumesCache = [];
+
+        // Salvar dados no Firestore
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const btnSubmit = form.querySelector('.btn-submit');
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = 'Salvando na nuvem...';
+
+            try {
+                const nome = document.getElementById('nome').value;
+                const marca = document.getElementById('marca').value;
+                const clima = document.getElementById('clima').value;
+                const fixacao = document.getElementById('fixacao').value;
+                const imagemUrl = document.getElementById('imagem-url').value.trim();
+                
+                const tiposSelecionados = [];
+                document.querySelectorAll('#tipos-group input:checked').forEach(el => tiposSelecionados.push(el.value));
+
+                const ocasioesSelecionadas = [];
+                document.querySelectorAll('#ocasiao-group input:checked').forEach(el => ocasioesSelecionadas.push(el.value));
+
+                await addDoc(collection(db, "perfumes"), {
+                    nome,
+                    marca,
+                    clima,
+                    fixacao: Number(fixacao),
+                    tipos: tiposSelecionados,
+                    ocasioes: ocasioesSelecionadas,
+                    imagem: imagemUrl,
+                    criadoEm: Date.now()
+                });
+
+                form.reset();
+            } catch (error) {
+                console.error("Erro ao salvar:", error);
+                alert("Erro ao salvar o perfume. Verifique o console.");
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = 'Salvar Perfume';
+            }
+        });
+
+        // Deletar perfume do Firestore
+        window.deletarPerfume = async function(id) {
+            if (confirm("Deseja realmente excluir este perfume?")) {
+                try {
+                    await deleteDoc(doc(db, "perfumes", id));
+                } catch (error) {
+                    console.error("Erro ao deletar:", error);
+                }
+            }
+        };
+
+        // Renderizar listagem baseada em filtros e ordenação alfabética
+        function renderizar() {
+            listaPerfumes.innerHTML = '';
+
+            perfumesCache.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR', { sensitivity: 'base' }));
+
+            const ocFiltro = filtroOcasiao.value;
+            const clFiltro = filtroClima.value;
+
+            const filtrados = perfumesCache.filter(p => {
+                const matchOcasiao = !ocFiltro || (p.ocasioes && p.ocasioes.includes(ocFiltro));
+                const matchClima = !clFiltro || p.clima === clFiltro;
+                return matchOcasiao && matchClima;
+            });
+
+            if (filtrados.length === 0) {
+                listaPerfumes.innerHTML = '<div class="card" style="text-align: center; color: #555;">Nenhum perfume encontrado.</div>';
+                return;
+            }
+
+            filtrados.forEach((p) => {
+                const card = document.createElement('div');
+                card.className = 'perfume-card';
+                const imgExibida = p.imagem || 'https://via.placeholder.com/100?text=Sem+Foto';
+
+                card.innerHTML = `
+                    <img src="${imgExibida}" alt="Foto do Perfume" class="perfume-card-img" onerror="this.src='https://via.placeholder.com/100?text=Erro+Foto'">
+                    <div class="perfume-card-info">
+                        <h3>${p.nome}</h3>
+                        <p><strong>Marca:</strong> ${p.marca}</p>
+                        <p><strong>Clima:</strong> ${p.clima} | <strong>Fixação:</strong> ${p.fixacao}h</p>
+                        <div class="perfume-tags">
+                            ${p.tipos ? p.tipos.map(t => `<span class="tag">${t}</span>`).join('') : ''}
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-action btn-delete" onclick="deletarPerfume('${p.id}')">Deletar</button>
+                    </div>
+                `;
+                listaPerfumes.appendChild(card);
+            });
+        }
+
+        // Sincronização em tempo real com o Firestore
+        onSnapshot(collection(db, "perfumes"), (snapshot) => {
+            perfumesCache = [];
+            snapshot.forEach((docSnap) => {
+                perfumesCache.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            loadingMsg.style.display = 'none';
+            renderizar();
+        }, (error) => {
+            console.error("Erro ao carregar dados:", error);
+            loadingMsg.textContent = "Erro ao conectar com o banco de dados na nuvem.";
+        });
+
+        filtroOcasiao.addEventListener('change', renderizar);
+        filtroClima.addEventListener('change', renderizar);
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Nossos Perfumes</h1>
+        <p>Indicações de uso</p>
+    </header>
+
+    <div class="card">
+        <h2>Adicionar Novo Perfume</h2>
+        <form id="form-perfume">
+            <div>
+                <label>Nome do Perfume *</label>
+                <input type="text" id="nome" required placeholder="Ex: Club de Nuit Intense Fuego">
+            </div>
+            <div>
+                <label>Marca *</label>
+                <input type="text" id="marca" required placeholder="Ex: Club de Nuit">
+            </div>
+
+            <div>
+                <label>Clima Ideal *</label>
+                <select id="clima" required>
+                    <option value="☀️ Calor / Verão">☀️ Calor / Verão</option>
+                    <option value="❄️ Frio / Inverno">❄️ Frio / Inverno</option>
+                    <option value="🍂 Meia-Estação">🍂 Meia-Estação</option>
+                    <option value="🌐 Versátil (Qualquer)">🌐 Versátil (Qualquer)</option>
+                </select>
+            </div>
+            <div>
+                <label>Tempo de fixação (horas) *</label>
+                <input type="number" id="fixacao" min="1" max="12" value="8" required placeholder="Ex: 8">
+            </div>
+
+            <div class="full-width">
+                <label>Tipo de Perfume (Selecione um ou mais) *</label>
+                <div class="checkbox-group" id="tipos-group">
+                    <label class="checkbox-label"><input type="checkbox" value="Cítrico"> 🍋 Cítrico</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Amadeirado"> 🪵 Amadeirado</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Doce"> 🍯 Doce / Gourmand</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Aromático"> 🌿 Aromático / Herbal</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Floral"> 🌸 Floral</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Oriental"> 🌶️ Oriental / Especiado</label>
+                </div>
+            </div>
+
+            <div class="full-width">
+                <label>Ocasiões de Uso (Selecione uma ou mais) *</label>
+                <div class="checkbox-group" id="ocasiao-group">
+                    <label class="checkbox-label"><input type="checkbox" value="Trabalho"> 💼 Trabalho / Escritório</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Casual"> ☕ Casual / Dia a Dia</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Encontro"> 🍷 Encontro / Noite</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Balada"> 🎉 Balada / Festa</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Esporte"> ⚽ Esporte / Academia</label>
+                </div>
+            </div>
+
+            <div class="full-width">
+                <label>Link da Foto (Opcional)</label>
+                <input type="url" id="imagem-url" placeholder="Cole aqui o link da imagem da internet (ex: https://...)">
+            </div>
+
+            <button type="submit" class="btn-submit">Salvar Perfume</button>
+        </form>
+    </div>
+
+    <div class="filter-bar card">
+        <select id="filtro-ocasiao">
+            <option value="">Filtrar por Ocasião (Todas)</option>
+            <option value="Trabalho">💼 Trabalho / Escritório</option>
+            <option value="Casual">☕ Casual / Dia a Dia</option>
+            <option value="Encontro">🍷 Encontro / Noite</option>
+            <option value="Balada">🎉 Balada / Festa</option>
+            <option value="Esporte">⚽ Esporte / Academia</option>
+        </select>
+        
+        <select id="filtro-clima">
+            <option value="">Filtrar por Clima (Todos)</option>
+            <option value="☀️ Calor / Verão">☀️ Calor / Verão</option>
+            <option value="❄️ Frio / Inverno">❄️ Frio / Inverno</option>
+            <option value="🍂 Meia-Estação">🍂 Meia-Estação</option>
+            <option value="🌐 Versátil (Qualquer)">🌐 Versátil (Qualquer)</option>
+        </select>
+    </div>
+
+    <div id="loading-msg">Conectando ao banco de dados na nuvem...</div>
+    <div id="lista-perfumes"></div>
+</div>
+
+</body>
+</html>
