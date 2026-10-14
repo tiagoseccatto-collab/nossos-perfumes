@@ -123,6 +123,11 @@
             width: 16px;
             height: 16px;
         }
+        .form-actions {
+            grid-column: span 2;
+            display: flex;
+            gap: 10px;
+        }
         button.btn-submit {
             background-color: #1a1a1a;
             color: #f3e5ab;
@@ -132,12 +137,27 @@
             font-size: 16px;
             cursor: pointer;
             font-weight: bold;
-            grid-column: span 2;
+            flex: 1;
             transition: background-color 0.3s;
             margin-top: 10px;
         }
         button.btn-submit:hover {
             background-color: #333333;
+        }
+        button.btn-cancel {
+            background-color: #777;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            display: none;
+            margin-top: 10px;
+        }
+        button.btn-cancel:hover {
+            background-color: #555;
         }
         .filter-bar {
             margin-bottom: 25px;
@@ -225,6 +245,11 @@
             width: 80px;
             text-align: center;
         }
+        .btn-edit {
+            background-color: #c5a059;
+            color: #1a1a1a;
+        }
+        .btn-edit:hover { background-color: #b08d47; }
         .btn-delete {
             background-color: #1a1a1a;
             color: #f3e5ab;
@@ -243,7 +268,7 @@
     <!-- SDKs do Firebase v10 com as suas credenciais -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCC0qDw7sLVou759xhnhhkHpKpLtSf9US4",
@@ -258,20 +283,23 @@
         const db = getFirestore(app);
 
         const form = document.getElementById('form-perfume');
+        const formTitle = document.getElementById('form-title');
+        const btnSubmit = document.getElementById('btn-submit');
+        const btnCancel = document.getElementById('btn-cancel');
         const listaPerfumes = document.getElementById('lista-perfumes');
         const filtroOcasiao = document.getElementById('filtro-ocasiao');
         const filtroClima = document.getElementById('filtro-clima');
         const loadingMsg = document.getElementById('loading-msg');
 
         let perfumesCache = [];
+        let editandoId = null;
 
-        // Salvar dados no Firestore
+        // Salvar ou Atualizar dados no Firestore
         form.addEventListener('submit', async function(event) {
             event.preventDefault();
             
-            const btnSubmit = form.querySelector('.btn-submit');
             btnSubmit.disabled = true;
-            btnSubmit.textContent = 'Salvando na nuvem...';
+            btnSubmit.textContent = editandoId ? 'Atualizando na nuvem...' : 'Salvando na nuvem...';
 
             try {
                 const nome = document.getElementById('nome').value;
@@ -286,7 +314,7 @@
                 const ocasioesSelecionadas = [];
                 document.querySelectorAll('#ocasiao-group input:checked').forEach(el => ocasioesSelecionadas.push(el.value));
 
-                await addDoc(collection(db, "perfumes"), {
+                const perfumeData = {
                     nome,
                     marca,
                     clima,
@@ -294,24 +322,75 @@
                     tipos: tiposSelecionados,
                     ocasioes: ocasioesSelecionadas,
                     imagem: imagemUrl,
-                    criadoEm: Date.now()
-                });
+                    atualizadoEm: Date.now()
+                };
 
-                form.reset();
+                if (editandoId) {
+                    // Atualizar registo existente
+                    await updateDoc(doc(db, "perfumes", editandoId), perfumeData);
+                    cancelarEdicao();
+                } else {
+                    // Criar novo registo
+                    perfumeData.criadoEm = Date.now();
+                    await addDoc(collection(db, "perfumes"), perfumeData);
+                    form.reset();
+                }
             } catch (error) {
                 console.error("Erro ao salvar:", error);
                 alert("Erro ao salvar o perfume. Verifique o console.");
             } finally {
                 btnSubmit.disabled = false;
-                btnSubmit.textContent = 'Salvar Perfume';
+                btnSubmit.textContent = editandoId ? 'Atualizar Perfume' : 'Salvar Perfume';
             }
         });
+
+        // Iniciar edição preenchendo o formulário
+        window.editarPerfume = function(id) {
+            const perfume = perfumesCache.find(p => p.id === id);
+            if (!perfume) return;
+
+            editandoId = id;
+            document.getElementById('nome').value = perfume.nome;
+            document.getElementById('marca').value = perfume.marca;
+            document.getElementById('clima').value = perfume.clima;
+            document.getElementById('fixacao').value = perfume.fixacao;
+            document.getElementById('imagem-url').value = perfume.imagem || '';
+
+            // Marcar tipos
+            document.querySelectorAll('#tipos-group input').forEach(el => {
+                el.checked = perfume.tipos && perfume.tipos.includes(el.value);
+            });
+
+            // Marcar ocasiões
+            document.querySelectorAll('#ocasiao-group input').forEach(el => {
+                el.checked = perfume.ocasioes && perfume.ocasioes.includes(el.value);
+            });
+
+            formTitle.textContent = 'Editar Perfume';
+            btnSubmit.textContent = 'Atualizar Perfume';
+            btnCancel.style.display = 'inline-block';
+
+            // Rolar a tela para o formulário no topo
+            form.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        // Cancelar modo de edição
+        window.cancelarEdicao = function() {
+            editandoId = null;
+            form.reset();
+            formTitle.textContent = 'Adicionar Novo Perfume';
+            btnSubmit.textContent = 'Salvar Perfume';
+            btnCancel.style.display = 'none';
+        };
+
+        btnCancel.addEventListener('click', cancelarEdicao);
 
         // Deletar perfume do Firestore
         window.deletarPerfume = async function(id) {
             if (confirm("Deseja realmente excluir este perfume?")) {
                 try {
                     await deleteDoc(doc(db, "perfumes", id));
+                    if (editandoId === id) cancelarEdicao();
                 } catch (error) {
                     console.error("Erro ao deletar:", error);
                 }
@@ -354,6 +433,7 @@
                         </div>
                     </div>
                     <div class="card-actions">
+                        <button class="btn-action btn-edit" onclick="editarPerfume('${p.id}')">Editar</button>
                         <button class="btn-action btn-delete" onclick="deletarPerfume('${p.id}')">Deletar</button>
                     </div>
                 `;
@@ -387,7 +467,7 @@
     </header>
 
     <div class="card">
-        <h2>Adicionar Novo Perfume</h2>
+        <h2 id="form-title">Adicionar Novo Perfume</h2>
         <form id="form-perfume">
             <div>
                 <label>Nome do Perfume *</label>
@@ -444,7 +524,10 @@
                 <input type="url" id="imagem-url" placeholder="Cole aqui o link da imagem da internet (ex: https://...)">
             </div>
 
-            <button type="submit" class="btn-submit">Salvar Perfume</button>
+            <div class="form-actions">
+                <button type="submit" id="btn-submit" class="btn-submit">Salvar Perfume</button>
+                <button type="button" id="btn-cancel" class="btn-cancel">Cancelar Edição</button>
+            </div>
         </form>
     </div>
 
