@@ -17,7 +17,7 @@
             background-size: cover;
             color: var(--text);
             margin: 0;
-            padding: 5px;
+            padding: 8px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -32,20 +32,20 @@
         }
         header {
             text-align: center;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
             color: #ffffff;
             text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
         h1 {
             color: #f3e5ab;
-            margin-bottom: 0px;
-            font-size: 1.15rem;
+            margin-bottom: 1px;
+            font-size: 1.35rem;
             letter-spacing: 0.5px;
             font-weight: 700;
         }
         header p {
             color: #e2dcda;
-            font-size: 0.68rem;
+            font-size: 0.78rem;
             letter-spacing: 0.2px;
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
             margin: 0;
@@ -55,43 +55,43 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 6px 8px;
-            border-radius: 7px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-            margin-bottom: 6px;
+            padding: 10px 12px;
+            border-radius: 9px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+            margin-bottom: 10px;
             width: 100%;
             box-sizing: border-box;
         }
         .card h2 {
             margin-top: 0;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
             color: var(--primary);
             border-bottom: 1px solid #e5d394;
-            padding-bottom: 2px;
-            font-size: 0.8rem;
+            padding-bottom: 4px;
+            font-size: 0.95rem;
             font-weight: bold;
         }
         form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5px;
+            gap: 8px;
         }
         form .full-width {
             grid-column: span 2;
         }
         label {
             font-weight: 600;
-            font-size: 9px;
+            font-size: 10.5px;
             color: #333;
             display: block;
-            margin-bottom: 1px;
+            margin-bottom: 3px;
         }
         input[type="text"], select, input[type="url"] {
             width: 100%;
-            padding: 4px 6px;
+            padding: 7px 9px;
             border: 1px solid #bbb;
-            border-radius: 4px;
-            font-size: 10.5px;
+            border-radius: 6px;
+            font-size: 12px;
             box-sizing: border-box;
             background: rgba(255, 255, 255, 0.95);
         }
@@ -103,45 +103,46 @@
         }
         .checkbox-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
-            gap: 3px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 6px;
             background: rgba(248, 248, 248, 0.9);
             border: 1px solid #ccc;
-            padding: 5px;
-            border-radius: 4px;
+            padding: 8px;
+            border-radius: 6px;
         }
         .checkbox-label {
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 7px;
             font-weight: normal;
-            font-size: 9.5px;
+            font-size: 11.5px;
             cursor: pointer;
             margin-bottom: 0;
             color: #222;
+            padding: 2px 0;
         }
         .checkbox-label input {
             cursor: pointer;
-            width: 10px;
-            height: 10px;
+            width: 15px;
+            height: 15px;
         }
         .form-actions {
             grid-column: span 2;
             display: flex;
-            gap: 4px;
+            gap: 8px;
+            margin-top: 4px;
         }
         button.btn-submit {
             background-color: #1a1a1a;
             color: #f3e5ab;
             border: 1px solid #f3e5ab;
-            padding: 5px 8px;
-            border-radius: 4px;
-            font-size: 10.5px;
+            padding: 9px 12px;
+            border-radius: 6px;
+            font-size: 12px;
             cursor: pointer;
             font-weight: bold;
             flex: 1;
             transition: background-color 0.3s;
-            margin-top: 2px;
         }
         button.btn-submit:hover {
             background-color: #333333;
@@ -150,105 +151,104 @@
             background-color: #777;
             color: #fff;
             border: 1px solid #555;
-            padding: 5px 8px;
-            border-radius: 4px;
-            font-size: 10.5px;
+            padding: 9px 12px;
+            border-radius: 6px;
+            font-size: 12px;
             cursor: pointer;
             font-weight: bold;
             display: none;
-            margin-top: 2px;
         }
         button.btn-cancel:hover {
             background-color: #555;
         }
         .filter-bar {
-            margin-bottom: 6px;
+            margin-bottom: 10px;
             width: 100%;
             box-sizing: border-box;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5px;
+            gap: 8px;
         }
         .filter-bar select {
             background: rgba(255, 255, 255, 0.95);
             font-weight: 500;
-            font-size: 9.5px;
-            padding: 4px;
+            font-size: 11px;
+            padding: 7px;
         }
         #lista-perfumes {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            max-height: 57vh;
+            gap: 8px;
+            max-height: 55vh;
             overflow-y: auto;
-            padding-right: 2px;
+            padding-right: 3px;
         }
         #lista-perfumes::-webkit-scrollbar {
-            width: 3px;
+            width: 4px;
         }
         #lista-perfumes::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.1);
-            border-radius: 2px;
+            border-radius: 3px;
         }
         #lista-perfumes::-webkit-scrollbar-thumb {
             background: var(--secondary);
-            border-radius: 2px;
+            border-radius: 3px;
         }
         .perfume-card {
             background: rgba(240, 240, 240, 0.9);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 6px;
-            border-radius: 7px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            padding: 9px;
+            border-radius: 9px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             display: flex;
-            gap: 6px;
+            gap: 9px;
             align-items: flex-start;
             width: 100%;
             box-sizing: border-box;
             flex-shrink: 0;
         }
         .perfume-card-img {
-            width: 45px;
-            height: 45px;
+            width: 58px;
+            height: 58px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 6px;
             border: 1px solid #ccc;
             background-color: #fff;
             flex-shrink: 0;
         }
         .perfume-card-info { flex: 1; min-width: 0; }
-        .perfume-card h3 { margin: 0 0 1px 0; color: var(--primary); font-size: 0.8rem; word-break: break-word; }
-        .perfume-card p { margin: 1px 0; font-size: 9px; color: #444; word-break: break-word; }
+        .perfume-card h3 { margin: 0 0 2px 0; color: var(--primary); font-size: 0.95rem; word-break: break-word; }
+        .perfume-card p { margin: 2px 0; font-size: 10.5px; color: #444; word-break: break-word; }
         .perfume-tags {
             display: flex;
-            gap: 2px;
-            margin-top: 2px;
+            gap: 4px;
+            margin-top: 4px;
             flex-wrap: wrap;
         }
         .tag {
             background: #e5d394;
             color: #1a1a1a;
-            padding: 1px 3px;
-            border-radius: 3px;
-            font-size: 8px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 9.5px;
             font-weight: bold;
         }
         .card-actions {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 5px;
             flex-shrink: 0;
         }
         .btn-action {
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-size: 9px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10.5px;
             cursor: pointer;
             border: none;
             font-weight: bold;
-            width: 46px;
+            width: 58px;
             text-align: center;
         }
         .btn-edit {
@@ -266,8 +266,8 @@
             color: #fff;
             text-align: center;
             font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 10px;
+            margin-bottom: 8px;
+            font-size: 11px;
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
 
@@ -422,7 +422,7 @@
             });
 
             if (filtrados.length === 0) {
-                listaPerfumes.innerHTML = '<div class="card" style="text-align: center; color: #555; font-size: 9.5px;">Nenhum perfume encontrado.</div>';
+                listaPerfumes.innerHTML = '<div class="card" style="text-align: center; color: #555; font-size: 11px;">Nenhum perfume encontrado.</div>';
                 return;
             }
 
@@ -507,61 +507,4 @@
 
             <div class="full-width">
                 <label>Tipo de Perfume *</label>
-                <div class="checkbox-group" id="tipos-group">
-                    <label class="checkbox-label"><input type="checkbox" value="Cítrico"> 🍋 Cítrico</label>
-                    <label class="checkbox-label"><input type="checkbox" value="Amadeirado"> 🪵 Amadeirado</label>
-                    <label class="checkbox-label"><input type="checkbox" value="Doce"> 🍯 Doce</label>
-                    <label class="checkbox-label"><input type="checkbox" value="Aromático"> 🌿 Aromático</label>
-                    <label class="checkbox-label"><input type="checkbox" value="Floral"> 🌸 Floral</label>
-                    <label class="checkbox-label"><input type="checkbox" value="Oriental"> 🌶️ Oriental</label>
-                </div>
-            </div>
-
-            <div class="full-width">
-                <label>Ocasiões de Uso *</label>
-                <div class="checkbox-group" id="ocasiao-group">
-                    <label class="checkbox-label"><input type="checkbox" value="Trabalho"> 💼 Trabalho</label>
-                    <label class="checkbox-label"><input type="checkbox" value="Casual"> ☕ Casual</label>
-                    <label class="checkbox-label"><input type="checkbox" value="Encontro"> 🍷 Encontro</label>
-                    <label class="checkbox-label"><input type="checkbox" value="Balada"> 🎉 Balada</label>
-                    <label class="checkbox-label"><input type="checkbox" value="Esporte"> ⚽ Esporte</label>
-                </div>
-            </div>
-
-            <div class="full-width">
-                <label>Link da Foto (Opcional)</label>
-                <input type="url" id="imagem-url" placeholder="Cole aqui o link da imagem">
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" id="btn-submit" class="btn-submit">Salvar Perfume</button>
-                <button type="button" id="btn-cancel" class="btn-cancel">Cancelar</button>
-            </div>
-        </form>
-    </div>
-
-    <div class="filter-bar card">
-        <select id="filtro-ocasiao">
-            <option value="">Filtrar Ocasião (Todas)</option>
-            <option value="Trabalho">💼 Trabalho</option>
-            <option value="Casual">☕ Casual</option>
-            <option value="Encontro">🍷 Encontro</option>
-            <option value="Balada">🎉 Balada</option>
-            <option value="Esporte">⚽ Esporte</option>
-        </select>
-        
-        <select id="filtro-clima">
-            <option value="">Filtrar Clima (Todos)</option>
-            <option value="☀️ Calor / Verão">☀️ Calor / Verão</option>
-            <option value="❄️ Frio / Inverno">❄️ Frio / Inverno</option>
-            <option value="🍂 Meia-Estação">🍂 Meia-Estação</option>
-            <option value="🌐 Versátil (Qualquer)">🌐 Versátil (Qualquer)</option>
-        </select>
-    </div>
-
-    <div id="loading-msg">Conectando ao banco de dados na nuvem...</div>
-    <div id="lista-perfumes"></div>
-</div>
-
-</body>
-</html>
+                <div class="checkbox-group" id="tip
