@@ -235,6 +235,11 @@
             font-size: 9.5px;
             font-weight: bold;
         }
+        .tag-ocasiao {
+            background: #d4bc78;
+            color: #1a1a1a;
+            border: 1px dashed #7a6021;
+        }
         .card-actions {
             display: flex;
             flex-direction: column;
@@ -440,6 +445,7 @@
                         <p><strong>Fixação:</strong> ${p.fixacao}</p>
                         <div class="perfume-tags">
                             ${p.tipos ? p.tipos.map(t => `<span class="tag">${t}</span>`).join('') : ''}
+                            ${p.ocasioes ? p.ocasioes.map(o => `<span class="tag tag-ocasiao">💼 ${o}</span>`).join('') : ''}
                         </div>
                     </div>
                     <div class="card-actions">
