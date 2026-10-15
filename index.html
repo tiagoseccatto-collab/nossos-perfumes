@@ -165,11 +165,17 @@
             margin-bottom: 10px;
             width: 100%;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .filter-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
+            width: 100%;
         }
-        .filter-bar select {
+        .filter-bar select, .filter-bar input {
             background: rgba(255, 255, 255, 0.95);
             font-weight: 500;
             font-size: 11px;
@@ -283,7 +289,7 @@
             form .full-width {
                 grid-column: span 1;
             }
-            .filter-bar {
+            .filter-row {
                 grid-template-columns: 1fr;
             }
         }
@@ -311,6 +317,7 @@
         const btnSubmit = document.getElementById('btn-submit');
         const btnCancel = document.getElementById('btn-cancel');
         const listaPerfumes = document.getElementById('lista-perfumes');
+        const buscaTexto = document.getElementById('busca-texto');
         const filtroOcasiao = document.getElementById('filtro-ocasiao');
         const filtroClima = document.getElementById('filtro-clima');
         const loadingMsg = document.getElementById('loading-msg');
@@ -417,13 +424,15 @@
 
             perfumesCache.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR', { sensitivity: 'base' }));
 
+            const termoBusca = buscaTexto.value.toLowerCase().trim();
             const ocFiltro = filtroOcasiao.value;
             const clFiltro = filtroClima.value;
 
             const filtrados = perfumesCache.filter(p => {
+                const matchTexto = !termoBusca || p.nome.toLowerCase().includes(termoBusca) || p.marca.toLowerCase().includes(termoBusca);
                 const matchOcasiao = !ocFiltro || (p.ocasioes && p.ocasioes.includes(ocFiltro));
                 const matchClima = !clFiltro || p.clima === clFiltro;
-                return matchOcasiao && matchClima;
+                return matchTexto && matchOcasiao && matchClima;
             });
 
             if (filtrados.length === 0) {
@@ -469,6 +478,7 @@
             loadingMsg.textContent = "Erro ao conectar com o banco de dados na nuvem.";
         });
 
+        buscaTexto.addEventListener('input', renderizar);
         filtroOcasiao.addEventListener('change', renderizar);
         filtroClima.addEventListener('change', renderizar);
     </script>
@@ -549,22 +559,25 @@
     </div>
 
     <div class="filter-bar card">
-        <select id="filtro-ocasiao">
-            <option value="">Filtrar Ocasião (Todas)</option>
-            <option value="Trabalho">💼 Trabalho</option>
-            <option value="Dia a Dia">☀️ Dia a Dia</option>
-            <option value="Encontro">🍷 Encontro</option>
-            <option value="Balada">🎉 Balada</option>
-            <option value="Esporte">⚽ Esporte</option>
-        </select>
-        
-        <select id="filtro-clima">
-            <option value="">Filtrar Clima (Todos)</option>
-            <option value="☀️ Calor / Verão">☀️ Calor / Verão</option>
-            <option value="❄️ Frio / Inverno">❄️ Frio / Inverno</option>
-            <option value="🍂 Meia-Estação">🍂 Meia-Estação</option>
-            <option value="🌐 Versátil (Qualquer)">🌐 Versátil (Qualquer)</option>
-        </select>
+        <input type="text" id="busca-texto" placeholder="🔍 Pesquisar por nome ou marca...">
+        <div class="filter-row">
+            <select id="filtro-ocasiao">
+                <option value="">Filtrar Ocasião (Todas)</option>
+                <option value="Trabalho">💼 Trabalho</option>
+                <option value="Dia a Dia">☀️ Dia a Dia</option>
+                <option value="Encontro">🍷 Encontro</option>
+                <option value="Balada">🎉 Balada</option>
+                <option value="Esporte">⚽ Esporte</option>
+            </select>
+            
+            <select id="filtro-clima">
+                <option value="">Filtrar Clima (Todos)</option>
+                <option value="☀️ Calor / Verão">☀️ Calor / Verão</option>
+                <option value="❄️ Frio / Inverno">❄️ Frio / Inverno</option>
+                <option value="🍂 Meia-Estação">🍂 Meia-Estação</option>
+                <option value="🌐 Versátil (Qualquer)">🌐 Versátil (Qualquer)</option>
+            </select>
+        </div>
     </div>
 
     <div id="loading-msg">Conectando ao banco de dados na nuvem...</div>
