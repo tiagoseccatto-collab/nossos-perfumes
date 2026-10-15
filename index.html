@@ -445,7 +445,7 @@
                         <p><strong>Fixação:</strong> ${p.fixacao}</p>
                         <div class="perfume-tags">
                             ${p.tipos ? p.tipos.map(t => `<span class="tag">${t}</span>`).join('') : ''}
-                            ${p.ocasioes ? p.ocasioes.map(o => `<span class="tag tag-ocasiao">💼 ${o}</span>`).join('') : ''}
+                            ${p.ocasioes ? p.ocasioes.map(o => `<span class="tag tag-ocasiao">📌 ${o}</span>`).join('') : ''}
                         </div>
                     </div>
                     <div class="card-actions">
@@ -529,7 +529,7 @@
                 <label>Ocasiões de Uso *</label>
                 <div class="checkbox-group" id="ocasiao-group">
                     <label class="checkbox-label"><input type="checkbox" value="Trabalho"> 💼 Trabalho</label>
-                    <label class="checkbox-label"><input type="checkbox" value="Casual"> ☕ Casual</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Dia a Dia"> ☀️ Dia a Dia</label>
                     <label class="checkbox-label"><input type="checkbox" value="Encontro"> 🍷 Encontro</label>
                     <label class="checkbox-label"><input type="checkbox" value="Balada"> 🎉 Balada</label>
                     <label class="checkbox-label"><input type="checkbox" value="Esporte"> ⚽ Esporte</label>
@@ -552,7 +552,7 @@
         <select id="filtro-ocasiao">
             <option value="">Filtrar Ocasião (Todas)</option>
             <option value="Trabalho">💼 Trabalho</option>
-            <option value="Casual">☕ Casual</option>
+            <option value="Dia a Dia">☀️ Dia a Dia</option>
             <option value="Encontro">🍷 Encontro</option>
             <option value="Balada">🎉 Balada</option>
             <option value="Esporte">⚽ Esporte</option>
